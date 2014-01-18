@@ -1,0 +1,39 @@
+<?php
+/**
+ * This file is part of Mbiz_Cc for Magento.
+ *
+ * @license All rights reserved
+ * @author Jacques Bodin-Hullin <@jacquesbh> <j.bodinhullin@monsieurbiz.com>
+ * @category Mbiz
+ * @package Mbiz_Cc
+ * @copyright Copyright (c) 2014 Monsieur Biz (http://monsieurbiz.com/)
+ */
+/* @var $this Mbiz_Cc_Block_List */
+
+$_cards = $this->getCustomerCards();
+?>
+
+<div class="page-title">
+    <h1><?php echo $this->__('My credit cards'); ?></h1>
+</div>
+
+<?php echo $this->getMessagesBlock()->toHtml(); ?>
+
+<?php if (!$_cards->count()): ?>
+<p><?php echo $this->__('No card saved.'); ?></p>
+<?php else: ?>
+<ul>
+<?php $i = 0; foreach ($_cards as $_card): $i++; ?>
+    <li>
+        <strong><?php echo $this->__("Card type:"); ?></strong> <?php echo $_card->getType(); ?></br>
+        <strong><?php echo $this->__("Card number"); ?></strong> : <?php echo $_card->getNumber(); ?><br/>
+        <strong><?php echo $this->__("Card owner name"); ?></strong> : <?php echo $this->escapeHtml($_card->getOwner()); ?><br/>
+        <strong><?php echo $this->__("Expiration date"); ?></strong> : <?php echo $this->__('end of %s', $_card->getValidityMonth()->toString('MMMM y')); ?><br/>
+        <a href="#" onclick="window.location.href = '<?php echo $_card->getDeleteUrl(); ?>';"><?php echo $this->__("Delete"); ?></a>
+    </li>
+<?php endforeach; ?>
+</ul>
+<?php endif; ?>
+<div class="buttons-set">
+    <button class="btn btn-success right" onclick="window.location='<?php echo $this->helper('mbiz_cc')->getNewUrl(); ?>';" title="<?php echo $this->__("Add a credit card"); ?>" type="button"><?php echo $this->__("Add a credit card"); ?></button>
+</div>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+/**
+ * This file is part of Mbiz_Cc for Magento.
+ *
+ * @license All rights reserved
+ * @author Jacques Bodin-Hullin <@jacquesbh> <j.bodinhullin@monsieurbiz.com>
+ * @category Mbiz
+ * @package Mbiz_Cc
+ * @copyright Copyright (c) 2014 Monsieur Biz (http://monsieurbiz.com/)
+ */
+-->
+<layout version="0.1.0">
+
+    <customer_account>
+        <!-- Link to credit cards -->
+        <reference name="customer_account_navigation">
+            <action method="addLink" translate="label" module="mbiz_cc"><name>credit_cards</name><path>customer/cc</path><label>My credit cards</label></action>
+        </reference>
+    </customer_account>
+
+    <customer_cc_index>
+        <update handle="customer_account"/>
+
+        <!-- Breadcrumbs -->
+        <action method="addCrumb" translate="info.label info.title" block="breadcrumbs">
+            <name>cc.list</name>
+            <info>
+                <label>My credit cards</label>
+                <title>My credit cards</title>
+                <link></link>
+                <first>0</first>
+                <last>1</last>
+            </info>
+        </action>
+
+        <block type="mbiz_cc/list" parent="content" name="cc.list" template="mbiz_cc/list.phtml" />
+    </customer_cc_index>
+
+    <customer_cc_new>
+        <update handle="customer_account"/>
+
+        <!-- Breadcrumbs -->
+        <reference name="breadcrumbs">
+            <action method="addCrumb" translate="info.label info.title">
+                <name>cc.list</name>
+                <info>
+                    <label>My credit cards</label>
+                    <title>My credit cards</title>
+                    <link>{{baseSecureUrl}}customer/cc/</link>
+                    <first>0</first>
+                    <last>0</last>
+                </info>
+            </action>
+            <action method="addCrumb" translate="info.label info.title">
+                <name>cc.add</name>
+                <info>
+                    <label>Add a card</label>
+                    <title>Add a card</title>
+                    <link></link>
+                    <first>0</first>
+                    <last>1</last>
+                </info>
+            </action>
+        </reference>
+
+        <block type="mbiz_cc/form" parent="content" name="cc.form" template="mbiz_cc/form.phtml" />
+    </customer_cc_new>
+
+</layout>

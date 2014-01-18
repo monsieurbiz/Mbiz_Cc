@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+/**
+ * This file is part of Mbiz_Cc for Magento.
+ *
+ * @license All rights reserved
+ * @author Jacques Bodin-Hullin <@jacquesbh> <j.bodinhullin@monsieurbiz.com>
+ * @category Mbiz
+ * @package Mbiz_Cc
+ * @copyright Copyright (c) 2014 Monsieur Biz (http://monsieurbiz.com/)
+ */
+-->
+<config>
+    <modules>
+        <Mbiz_Cc>
+            <version>0.1.0</version>
+        </Mbiz_Cc>
+    </modules>
+    <frontend>
+        <layout>
+            <updates>
+                <mbiz_cc module="Mbiz_Cc">
+                    <file>mbiz_cc.xml</file>
+                </mbiz_cc>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Mbiz_Cc>
+                    <files>
+                        <default>Mbiz_Cc.csv</default>
+                    </files>
+                </Mbiz_Cc>
+            </modules>
+        </translate>
+        <routers>
+            <customer>
+                <args>
+                    <modules>
+                        <Mbiz_Cc before="Mage_Customer">Mbiz_Cc</Mbiz_Cc>
+                    </modules>
+                </args>
+            </customer>
+        </routers>
+    </frontend>
+    <global>
+        <helpers>
+            <mbiz_cc>
+                <class>Mbiz_Cc_Helper</class>
+            </mbiz_cc>
+        </helpers>
+        <resources>
+            <mbiz_cc_setup>
+                <setup>
+                    <module>Mbiz_Cc</module>
+                    <class>Mage_Core_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </mbiz_cc_setup>
+        </resources>
+        <models>
+            <mbiz_cc>
+                <class>Mbiz_Cc_Model</class>
+                <resourceModel>mbiz_cc_resource</resourceModel>
+            </mbiz_cc>
+            <mbiz_cc_resource>
+                <class>Mbiz_Cc_Model_Resource</class>
+                <entities>
+                    <cc>
+                        <table>mbiz_cc</table>
+                    </cc>
+                </entities>
+            </mbiz_cc_resource>
+        </models>
+        <blocks>
+            <mbiz_cc>
+                <class>Mbiz_Cc_Block</class>
+            </mbiz_cc>
+        </blocks>
+    </global>
+</config>

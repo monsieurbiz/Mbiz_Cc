@@ -1,0 +1,116 @@
+<?php
+/**
+ * This file is part of Mbiz_Cc for Magento.
+ *
+ * @license All rights reserved
+ * @author Jacques Bodin-Hullin <@jacquesbh> <j.bodinhullin@monsieurbiz.com>
+ * @category Mbiz
+ * @package Mbiz_Cc
+ * @copyright Copyright (c) 2014 Monsieur Biz (http://monsieurbiz.com/)
+ */
+/* @var $this Mbiz_Cc_Block_Form */
+?>
+<script type="text/javascript">
+// <![CDATA[
+var MbizCc = Class.create();
+MbizCc.prototype = {
+
+    initialize: function ()
+    {},
+
+    updateType: function (radio_elmt, field_id)
+    {
+        if ($(field_id)) {
+            $(field_id).value = radio_elmt.value;
+        }
+    }
+};
+// ]]>
+</script>
+
+<div class="my-account">
+<div class="page-title">
+    <h1><?php echo $this->__("Add a credit card"); ?></h1>
+</div>
+
+<form action="<?php echo $this->getPostAction(); ?>" method="post" id="form-validate" autocomplete="off">
+    <div class="fieldset">
+        <?php echo $this->getBlockHtml('formkey'); ?>
+        <h2 class="legend"><?php echo $this->__("General Information"); ?></h2>
+        <ul class="form-list">
+            <li class="fields">
+                <div class="field name-type">
+                    <label class="required"><em>*</em> <?php echo $this->__("Card type:"); ?></label>
+                    <?php $classAdded = false; foreach ($this->getCardTypes() as $type): ?>
+                    <label>
+                        <input type="radio" name="cc_type" id="cc_card_<?php echo $type->getValue(); ?>" onchange="cc.updateType(this, 'card_cc_type');" value="<?php echo $type->getValue(); ?>" title="<?php echo $type->getLabel(); ?>" class="radio<?php if (!$classAdded): $classAdded = true; ?> validate-one-required-by-name<?php endif; ?>" />
+                        <span></span><?php echo $type->getLabel(); ?>
+                    </label>
+                    <?php endforeach; ?>
+                </div>
+                <input type="hidden" id="card_cc_type" name="type" />
+            </li>
+            <li class="fields">
+                <div class="field name-number">
+                    <label for="card_cc_number" class="required"><em>*</em> <?php echo $this->__("Card number"); ?></label>
+                    <div class="input-box">
+                        <input type="text" id="card_cc_number" name="number" value="" title="<?php echo $this->__("Card number"); ?>" maxlength="255" class="input-text required-entry validate-cc-number validate-cc-type" />
+                    </div>
+                </div>
+            </li>
+            <li class="fields">
+                <div class="field name-owner">
+                    <label for="card_cc_owner" class="required"><em>*</em> <?php echo $this->__("Card owner name"); ?></label>
+                    <div class="input-box">
+                        <input type="text" id="card_cc_owner" name="owner" value="" title="<?php echo $this->__("Card owner name"); ?>" maxlength="255" class="input-text required-entry" />
+                    </div>
+                </div>
+            </li>
+            <li class="fields">
+                <div class="field name-dateval">
+                    <label for="card_expiration_month" class="required"><em>*</em> <?php echo $this->__("Expiration date"); ?></label>
+                    <div class="input-box">
+                        <div class="v-fix">
+                            <select id="card_expiration_month" name="dateval-month" class="month validate-cc-exp required-entry">
+                                <?php $_ccExpMonth = ''; //$this->getInfoData('cc_exp_month') ?>
+                                <?php foreach ($this->getCcMonths() as $k => $v): ?>
+                                <option value="<?php echo $k ? $k : ''; ?>"<?php if ($k == $_ccExpMonth): ?> selected="selected"<?php endif; ?>><?php echo $v; ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                        
+                        <div class="v-fix" style="margin-left:6px">
+                            <?php $_ccExpYear = ''; //$this->getInfoData('cc_exp_year') ?>
+                            <select id="card_expiration_yr" name="dateval-year" class="year required-entry">
+                                <?php foreach ($this->getCcYears() as $k => $v): ?>
+                                <option value="<?php echo $k ? $k : ''; ?>"<?php if ($k == $_ccExpYear): ?> selected="selected"<?php endif; ?>><?php echo $v; ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="fields">
+                <div class="field name-cvv">
+                    <label for="card_cc_cid" class="required"><em>*</em> <?php echo $this->__("Card Verification Value"); ?></label>
+                    <div class="input-box">
+                        <input type="text" id="card_cc_cid" name="cvv" title="<?php echo $this->__("Card Verification Value"); ?>" class="input-text required-entry validate-cc-cvn" />
+                    </div>
+                    <!--<a href="#" class="cvv-what-is-this"><?php echo $this->__('What is this?') ?></a>--> 
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="buttons-set">
+        <p class="required">* <?php echo $this->__("Required fields"); ?></p>
+        <p class="back-link"><a href="<?php echo $this->getListUrl(); ?>"><small>&laquo; </small><?php echo $this->__("Back"); ?></a></p>
+        <button type="submit" title="<?php echo $this->__("Save the card"); ?>" class="button"><span><span><?php echo $this->__("Save the card"); ?></span></span></button>
+    </div>
+</form>
+</div>
+<script type="text/javascript">
+// <![CDATA[
+    var cc   = new MbizCc();
+    var form = new VarienForm('form-validate');
+// ]]>
+</script>
